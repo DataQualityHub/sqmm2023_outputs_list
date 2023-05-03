@@ -22,17 +22,18 @@ airtable_planner_fuzzy_matching <- function(airtable, planner, airtable_planner_
     rename(publication =pl.From) %>% 
     merge(airtable) %>% 
     rename(airtable_publication = publication, planner_publication = pl.To) %>% 
-    select(1,2,8,5,7,6,3) #1462 records same as airtable unique after cleaning
+    select(1,2,8,5,7,6,3) #1462 records same as airtable unique after cleaning #also no nas here
 
 
   second_stage_planner_link <- airtable_planner_fuzzy_spine %>% 
-    distinct(airtable_planner_fuzzy_spine$pl.To, .keep_all=TRUE) %>% # 675 records
+    #distinct(airtable_planner_fuzzy_spine$pl.To, .keep_all=TRUE) %>% # 675 records
     rename(publication = pl.To) %>% 
     merge(planner) %>% 
     rename(planner_publication = publication, airtable_publication = pl.From) %>% 
-    select(1,2,5,6,7,8,3) 
+    select(1,2,5,6,7,3) 
 
-  final_link <- merge(first_stage_airtable_link, second_stage_planner_link[,c(1,4:7)], all.x = TRUE) %>% 
+  final_link <- merge(first_stage_airtable_link, second_stage_planner_link[,c(1,3:5)]) %>% 
+    distinct(airtable_publication, .keep_all = TRUE) %>% 
     select(airtable_publication,
            publication_date,
            series,
@@ -47,7 +48,7 @@ airtable_planner_fuzzy_matching <- function(airtable, planner, airtable_planner_
   
 }
 
-airtable_planner_fuzzy_linked <- airtable_planner_fuzzy_matching(airtable, planner, airtable_planner_fuzzy_spining)
+airtable_planner_fuzzy_linked <- airtable_planner_fuzzy_matching(airtable, planner, airtable_planner_fuzzy_spining) ## THIS WORKS FINE EVERYTHING IS MATCHED
 rm(airtable_planner_fuzzy_matching, airtable, planner, airtable_planner_fuzzy_spine)
 
 
@@ -91,5 +92,5 @@ airtable_planner_staff_counts_linking <- function(x = airtable_planner_fuzzy_lin
 }
 
 final_dataset <- airtable_planner_staff_counts_linking(x = airtable_planner_fuzzy_linked, y = names_fuzzy_spine, z = staff_df)
-rm(airtable_planner_staff_counts_linking)
+rm(airtable_planner_staff_counts_linking, airtable_planner_fuzzy_linked, names_fuzzy_spine, staff_df)
 

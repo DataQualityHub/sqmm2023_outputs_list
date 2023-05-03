@@ -63,3 +63,5 @@ staff_df <- readxl::read_excel(staff_str, sheet =2) %>%
 
 rm(staff_str)
 
+
+#write.csv(airtable, "cleaned_airtable.csv")
