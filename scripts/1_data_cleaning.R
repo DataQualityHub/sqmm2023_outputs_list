@@ -52,9 +52,6 @@ planner <- readxl :: read_excel(data_str, sheet = 5) %>%
   distinct(publication, .keep_all = TRUE) #note 1181 all but 794 unique, I think people use the same names here - i.e, series
 
 
-rm(data_str)
-
-
 ####Staff counts
 
 staff_df <- readxl::read_excel(staff_str, sheet =2) %>% 

@@ -14,6 +14,7 @@ staff_str <- ".//input//12_Staff Counts 31 Mar 2023.xlsx"
 #Scripts
 source(".//scripts//1_data_cleaning.R")
 source(".//scripts//2_matching.R")
+source(".//scripts//3_series_exploration.R")
 
 '#Exporting
 date <- Sys.Date()

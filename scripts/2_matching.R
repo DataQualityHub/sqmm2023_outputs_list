@@ -67,7 +67,7 @@ names_fuzzy_matching <- function (airtable_planner_fuzzy_linked, staff_df) {
 }
 
 names_fuzzy_spine <- names_fuzzy_matching(airtable_planner_fuzzy_linked, staff_df)
-rm(names_fuzzy_matching, POLYFUZZ)
+rm(names_fuzzy_matching)
 
 #3. Final matching - linking the airtable/planner join with staff counts based on names_fuzzy_spine
 
